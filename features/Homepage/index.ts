@@ -1,0 +1,5 @@
+export { default as HomepageBanner } from './components/HomepageBanner.vue'
+export { default as HomepageHeader } from './components/HomepageHeader.vue'
+export { default as HomepageHero } from './components/HomepageHero.vue'
+export { default as HomepageInfoBlock } from './components/InfoBlock.vue'
+export { default as HomepagePreview } from './components/HomepagePreview.vue'
