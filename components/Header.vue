@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { useRoute } from 'nuxt/app';
-import { ref } from 'vue';
+import { useRoute } from 'nuxt/app'
+import { ref } from 'vue'
 
-const route = useRoute();
-const isMenuOpen = ref(false);
+const route = useRoute()
+const isMenuOpen = ref(false)
 
 const navItems = [
-  { label: "Home", to: "/" },
-  { label: "Veículos", to: "/vehicles" },
-  { label: "Sobre Nós", to: "/about" },
-  { label: "Contato", to: "/contact" },
-];
+  { label: 'Home', to: '/' },
+  { label: 'Veículos', to: '/vehicles' },
+  { label: 'Sobre Nós', to: '/about' },
+  { label: 'Contato', to: '/contact' }
+]
 
 function isActive(to: string) {
-  if (to === "/") {
-    return route.path === "/";
+  if (to === '/') {
+    return route.path === '/'
   }
-  return route.path === to || route.path.startsWith(`${to}/`);
+  return route.path === to || route.path.startsWith(`${to}/`)
 }
 </script>
 
@@ -24,12 +24,22 @@ function isActive(to: string) {
   <header
     class="mx-auto flex max-w-360 items-center justify-between px-6 py-6 md:px-12 lg:px-16"
   >
-    <NuxtLink to="/" class="flex items-center gap-2">
-      <img src="/images/car_logo.svg" alt="Logo" class="h-10 w-10 lg:h-12 lg:w-12 text-black" />
+    <NuxtLink
+      to="/"
+      class="flex items-center gap-2"
+    >
+      <img
+        src="/images/car_logo.svg"
+        alt="Logo"
+        class="h-10 w-10 lg:h-12 lg:w-12 text-black"
+      >
       <span class="text-base font-bold">Aluguel de Carros</span>
     </NuxtLink>
 
-    <nav aria-label="Navegação principal" class="hidden items-center lg:flex">
+    <nav
+      aria-label="Navegação principal"
+      class="hidden items-center lg:flex"
+    >
       <NuxtLink
         v-for="item in navItems"
         :key="item.to"
@@ -52,7 +62,10 @@ function isActive(to: string) {
       aria-label="Abrir menu de navegação"
       @click="isMenuOpen = !isMenuOpen"
     >
-      <UIcon name="lucide:menu" class="h-7 w-7 text-black" />
+      <UIcon
+        name="lucide:menu"
+        class="h-7 w-7 text-black"
+      />
     </button>
 
     <div class="flex items-center gap-3">
@@ -62,8 +75,8 @@ function isActive(to: string) {
         UT
       </div>
       <div class="hidden flex-col items-start lg:flex">
-        <span class="text-xs font-normal">Perfil</span>
-        <span class="text-xs font-bold">Usuário Teste</span>
+        <span class="text-xs font-normal text-gray-700">Perfil</span>
+        <span class="text-xs font-semibold text-gray-900">Usuário Teste</span>
       </div>
     </div>
   </header>
