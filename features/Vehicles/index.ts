@@ -1,0 +1,5 @@
+export { default as Vehicles } from './components/Vehicles.vue'
+export { default as CarCard } from './components/CarCard.vue'
+export { useCars } from './composables/useCars'
+export { getCarById, parseCarId, formatDailyPrice } from './domain/catalog'
+export type { Car } from './types/car'

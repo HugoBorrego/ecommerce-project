@@ -1,64 +1,54 @@
 <script setup lang="ts">
-interface NavColumn {
-  title: string;
-  links: { label: string; to: string }[];
-}
-
-const columns: NavColumn[] = [
+const columns = [
   {
-    title: "Empresa",
+    title: 'Conheça',
     links: [
-      { label: "Sobre Nós", to: "/about" },
-      { label: "Contato", to: "/contact" },
-      { label: "Carreiras", to: "/careers" },
-      { label: "Imprensa", to: "/press" },
-      { label: "Sustentabilidade", to: "/sustainability" },
-    ],
+      { label: 'Sobre nós', to: '/about' },
+      { label: 'Contato', to: '/contact' },
+      { label: 'Dúvidas frequentes', to: '/faq' }
+    ]
   },
   {
-    title: "Veículos",
+    title: 'Veículos',
     links: [
-      { label: "Sedan", to: "/vehicles?type=sedan" },
-      { label: "SUV", to: "/vehicles?type=suv" },
-      { label: "Pickup", to: "/vehicles?type=pickup" },
-      { label: "Minivan", to: "/vehicles?type=minivan" },
-      { label: "Conversível", to: "/vehicles?type=convertible" },
-      { label: "Elétricos", to: "/vehicles?type=electric" },
-    ],
+      { label: 'Toda a frota', to: '/vehicles' },
+      { label: 'Sedan', to: '/vehicles?type=sedan' },
+      { label: 'SUV', to: '/vehicles?type=suv' },
+      { label: 'Esportivo', to: '/vehicles?type=sport' }
+    ]
   },
   {
-    title: "Localizações",
+    title: 'Explore',
     links: [
-      { label: "São Paulo", to: "/locations/sao-paulo" },
-      { label: "Rio de Janeiro", to: "/locations/rio-de-janeiro" },
-      { label: "Belo Horizonte", to: "/locations/belo-horizonte" },
-      { label: "Brasília", to: "/locations/brasilia" },
-      { label: "Porto Alegre", to: "/locations/porto-alegre" },
-      { label: "Todas as Cidades", to: "/locations" },
-    ],
-  },
-];
+      { label: 'Guia de locação', to: '/blog' },
+      { label: 'Galeria', to: '/gallery' },
+      { label: 'Privacidade', to: '/privacy' }
+    ]
+  }
+]
 </script>
 
 <template>
   <nav
     aria-label="Navegação do rodapé"
-    class="grid grid-cols-2 gap-8 md:grid-cols-4"
+    class="grid min-w-0 grid-cols-2 gap-8 sm:grid-cols-3"
   >
-    <div v-for="column in columns" :key="column.title" class="space-y-4">
-      <h3
-        class="font-heading text-sm font-semibold text-gray-900 uppercase tracking-wider"
-      >
+    <div
+      v-for="column in columns"
+      :key="column.title"
+    >
+      <h2 class="text-sm font-bold">
         {{ column.title }}
-      </h3>
-      <ul class="space-y-3" role="list">
-        <li v-for="link in column.links" :key="link.to">
+      </h2>
+      <ul class="mt-4 space-y-3">
+        <li
+          v-for="link in column.links"
+          :key="link.to"
+        >
           <NuxtLink
             :to="link.to"
-            class="font-body text-sm text-gray-600 transition-colors hover:text-primary hover:underline focus:outline-none rounded"
-          >
-            {{ link.label }}
-          </NuxtLink>
+            class="rounded text-sm text-text-muted underline-offset-4 hover:text-primary hover:underline"
+          >{{ link.label }}</NuxtLink>
         </li>
       </ul>
     </div>

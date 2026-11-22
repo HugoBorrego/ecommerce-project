@@ -24,3 +24,6 @@ logs
 !.env.example
 
 .agents
+.qa
+.pnpm-store
+docs

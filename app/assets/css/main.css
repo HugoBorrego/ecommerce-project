@@ -1,18 +1,105 @@
 @import "tailwindcss";
-@import "@nuxt/ui";
+@source "../../../app/**/*.{vue,ts}";
+@source "../../../components/**/*.{vue,ts}";
+@source "../../../features/**/*.{vue,ts}";
 
 @theme static {
-  --font-sans: 'Public Sans', sans-serif;
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-heading: var(--font-sans);
+  --font-body: var(--font-sans);
+  --text-6: 1.5rem;
+  --text-7: 1.75rem;
+  --text-8: 2rem;
+  --text-12.5: 3.125rem;
+  --text-15: 3.75rem;
+  --radius-5: 1.25rem;
+  --radius-10: 2.5rem;
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-accent: #ff9e0c;
+  --color-accent-dark: #ea9500;
+  --color-surface: #f8fafc;
+  --color-text-muted: #475569;
+  --color-text-light: #64748b;
+}
 
-  --color-green-50: #EFFDF5;
-  --color-green-100: #D9FBE8;
-  --color-green-200: #B3F5D1;
-  --color-green-300: #75EDAE;
-  --color-green-400: #00DC82;
-  --color-green-500: #00C16A;
-  --color-green-600: #00A155;
-  --color-green-700: #007F45;
-  --color-green-800: #016538;
-  --color-green-900: #0A5331;
-  --color-green-950: #052E16;
+@layer base {
+  body {
+    @apply m-0 min-w-0 bg-white font-sans text-slate-900 antialiased;
+  }
+  button,
+  a,
+  input,
+  select,
+  textarea,
+  summary {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:not(:disabled),
+  summary {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 3px solid #1d4ed8;
+    outline-offset: 4px;
+  }
+  input,
+  select,
+  textarea,
+  fieldset {
+    min-width: 0;
+  }
+  img {
+    max-width: 100%;
+  }
+  [id] {
+    scroll-margin-top: 1.5rem;
+  }
+  ::selection {
+    background: #dbeafe;
+    color: #0f172a;
+  }
+}
+
+@utility site-container {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+@utility section-space {
+  @apply py-12 md:py-16;
+}
+@utility page-title {
+  @apply font-heading text-4xl leading-tight font-bold tracking-tight md:text-5xl;
+}
+@utility section-title {
+  @apply font-heading text-3xl leading-tight font-bold tracking-tight md:text-4xl;
+}
+@utility section-copy {
+  @apply max-w-2xl text-base leading-7 text-text-muted;
+}
+@utility eyebrow {
+  @apply text-sm font-bold tracking-wide text-primary;
+}
+@utility btn-primary {
+  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-60;
+}
+@utility btn-accent {
+  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-center text-sm font-bold text-slate-950 transition-colors hover:bg-accent-dark disabled:cursor-not-allowed disabled:opacity-60;
+}
+@utility field {
+  @apply block min-h-12 w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-base text-slate-900 placeholder:text-slate-500 disabled:bg-slate-100;
+}
+@utility field-label {
+  @apply mb-2 block text-sm font-semibold text-slate-800;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,107 +1,70 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useSubmission, SubmissionFeedback } from '@features/Requests'
 
-const email = ref<string>('')
-const status = ref<'idle' | 'loading' | 'success' | 'error'>('idle')
-const message = ref<string>('')
-
-async function handleSubmit() {
-  if (!email.value || !email.value.includes('@')) {
-    status.value = 'error'
-    message.value = 'Por favor, insira um e-mail válido'
-    return
-  }
-
-  status.value = 'loading'
-  message.value = ''
-
-  // Simulate API call
-  await new Promise(resolve => setTimeout(resolve, 1500))
-
-  status.value = 'success'
-  message.value = 'Obrigado por assinar! Em breve você receberá nossas ofertas.'
-  email.value = ''
-
-  setTimeout(() => {
-    status.value = 'idle'
-    message.value = ''
-  }, 5000)
-}
+const email = ref('')
+const consent = ref(false)
+const { status, message, receiptId, submit } = useSubmission()
 </script>
 
 <template>
-  <div class="space-y-4">
-    <h3 class="font-heading text-sm font-semibold text-gray-900 uppercase tracking-wider">
-      Newsletter
-    </h3>
-    <p class="font-body text-sm text-gray-600">
-      Receba ofertas exclusivas e novidades direto no seu e-mail.
+  <div class="min-w-0">
+    <h2 class="text-sm font-bold">
+      Novidades no seu e-mail
+    </h2>
+    <p class="mt-4 text-sm leading-6 text-text-muted">
+      Cadastre seu interesse para receber novidades da locadora.
     </p>
-
     <form
-      class="space-y-3"
+      class="mt-4"
       aria-label="Inscrição na newsletter"
-      @submit.prevent="handleSubmit"
+      :aria-busy="status === 'pending'"
+      @submit.prevent="submit({ kind: 'newsletter', email, consent })"
     >
-      <div class="flex flex-col sm:flex-row gap-2">
-        <label
-          for="footer-email"
-          class="sr-only"
-        >E-mail</label>
-        <input
-          id="footer-email"
-          v-model="email"
-          type="email"
-          placeholder="seu@email.com"
-          :disabled="status === 'loading' || status === 'success'"
-          class="flex-1 h-11 px-4 rounded-lg border border-gray-300 bg-white text-sm font-body text-gray-900 transition-all disabled:cursor-not-allowed"
-          aria-describedby="footer-email-message"
-        >
-        <button
-          type="submit"
-          :disabled="status === 'loading' || status === 'success' || !email"
-          class="h-11 px-6 rounded-lg bg-primary text-white text-sm font-semibold font-body transition-all hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-        >
-          <span
-            v-if="status === 'loading'"
-            class="flex items-center gap-2"
-          >
-            <UIcon
-              name="lucide:loader-2"
-              class="h-4 w-4 animate-spin"
-            />
-            <span>Inscrito...</span>
-          </span>
-          <span v-else-if="status === 'success'">
-            <UIcon
-              name="lucide:check"
-              class="h-4 w-4"
-            /> Inscrito
-          </span>
-          <span v-else>Inscrever</span>
-        </button>
-      </div>
-
-      <p
-        v-if="message"
-        id="footer-email-message"
-        :class="[
-          'font-body text-xs transition-colors',
-          status === 'success' ? 'text-green-600' : 'text-red-600'
-        ]"
-        role="alert"
-        aria-live="polite"
+      <fieldset
+        :disabled="status === 'pending' || status === 'success'"
+        class="min-w-0 space-y-3"
       >
-        {{ message }}
-      </p>
-
-      <p class="font-body text-xs text-gray-500">
-        Não enviamos spam. Seu e-mail está seguro conosco.
-        <NuxtLink
-          to="/privacy"
-          class="underline hover:text-primary"
-        >Política de privacidade</NuxtLink>
-      </p>
+        <label
+          for="newsletter-email"
+          class="field-label"
+        >E-mail</label>
+        <div class="grid min-w-0 gap-3 sm:grid-cols-[minmax(0,1fr)_auto] lg:grid-cols-1 xl:grid-cols-[minmax(0,1fr)_auto]">
+          <input
+            id="newsletter-email"
+            v-model="email"
+            type="email"
+            name="email"
+            required
+            maxlength="254"
+            autocomplete="email"
+            class="field"
+            placeholder="seu@email.com"
+          >
+          <button
+            type="submit"
+            class="btn-primary"
+          >
+            {{ status === 'pending' ? 'Enviando…' : status === 'success' ? 'Inscrição registrada' : 'Inscrever' }}
+          </button>
+        </div>
+        <label class="flex items-start gap-2 text-sm leading-6 text-text-muted">
+          <input
+            v-model="consent"
+            type="checkbox"
+            required
+            class="mt-1 size-4 shrink-0 accent-primary"
+          >
+          <span>Quero receber novidades por e-mail e li as <NuxtLink
+            to="/privacy"
+            class="rounded underline"
+          >informações de privacidade</NuxtLink>.</span>
+        </label>
+      </fieldset>
+      <SubmissionFeedback
+        :status="status"
+        :message="message"
+        :receipt-id="receiptId"
+      />
     </form>
   </div>
 </template>
