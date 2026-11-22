@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "typecheck": "nuxt typecheck",
     "test": "node --experimental-strip-types --test tests/domain.test.ts tests/request-store.test.ts",
-    "test:http": "node --test tests/http-smoke.mjs"
+    "test:http": "node --test tests/http-smoke.mjs",
+    "requests:list": "node scripts/list-requests.mjs"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.125",
